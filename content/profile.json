@@ -1,0 +1,140 @@
+{
+  "name": "Nihal R",
+  "descriptor": "Electronics & Communication Engineering student",
+  "intro": "I study at PES University and am interested in robotics, embedded systems, and simulation-driven development for autonomous robotics research.",
+  "about": "I am an Electronics and Communication Engineering student at PES University with hands-on experience in robotics, CAD modelling, robot kinematics, embedded systems, and physics-based simulation.\n\nI am currently developing a quadruped robotic platform at MARS C-IoT Lab using Fusion 360, URDF, and PyBullet.\n\nMy interests include ROS 2, sensor fusion, computer vision, and simulation-driven development for autonomous robotics research.",
+  "homeAbout": "I’m studying Electronics and Communication Engineering at PES University. At MARS C-IoT Lab, I’m developing a quadruped robotic platform with Fusion 360, URDF, and PyBullet.",
+  "photoAlt": "Nihal R standing in front of a wall of illustrated posters",
+  "facts": [
+    {
+      "label": "Program",
+      "value": "B.Tech · ECE"
+    },
+    {
+      "label": "University",
+      "value": "PES University"
+    },
+    {
+      "label": "Current focus",
+      "value": "Quadruped robotics"
+    },
+    {
+      "label": "Based in",
+      "value": "Bengaluru"
+    }
+  ],
+  "location": "Bengaluru",
+  "email": "nihalreji20@gmail.com",
+  "linkedin": "https://linkedin.com/in/nihal-reji-428b26215",
+  "github": "https://github.com/Nihalreji20",
+  "showLocation": true,
+  "showEmail": true,
+  "showPhone": false,
+  "showLinkedin": true,
+  "showGithub": true,
+  "skills": [
+    {
+      "title": "Robotics & Simulation",
+      "items": [
+        "Robot Kinematics",
+        "Inverse Kinematics",
+        "Gait Planning",
+        "PyBullet",
+        "URDF Development",
+        "ROS 2 (Fundamentals)",
+        "Sensor Fusion",
+        "Autonomous Navigation"
+      ],
+      "preview": [
+        "Robot Kinematics",
+        "Inverse Kinematics",
+        "Gait Planning"
+      ]
+    },
+    {
+      "title": "CAD & Mechanical Design",
+      "items": [
+        "Fusion 360",
+        "3D CAD Modelling",
+        "Mechanical Design",
+        "URDF Model Integration"
+      ],
+      "preview": [
+        "Fusion 360",
+        "3D CAD Modelling",
+        "Mechanical Design"
+      ]
+    },
+    {
+      "title": "Embedded Systems & Electronics",
+      "items": [
+        "ESP32 Development",
+        "Arduino",
+        "IMU Integration",
+        "Encoder Integration",
+        "PCA9685 Servo Driver",
+        "Sensor Integration",
+        "Bluetooth Communication",
+        "Motor Driver Interfacing",
+        "Hardware Prototyping"
+      ],
+      "preview": [
+        "ESP32 Development",
+        "Arduino",
+        "IMU Integration"
+      ]
+    },
+    {
+      "title": "Programming, Vision & Tools",
+      "items": [
+        "Python",
+        "C",
+        "MATLAB",
+        "Git",
+        "GitHub",
+        "Linux (Ubuntu)",
+        "VS Code",
+        "Basic MySQL",
+        "Digital Image Processing",
+        "OpenCV",
+        "Camera Calibration",
+        "Visual SLAM"
+      ],
+      "preview": [
+        "Python",
+        "C",
+        "MATLAB"
+      ]
+    }
+  ],
+  "history": [
+    {
+      "kind": "Education",
+      "title": "B.Tech in Electronics and Communication Engineering",
+      "organization": "PES University",
+      "period": "2024–2028",
+      "description": "CGPA 8.07/10",
+      "showOnHome": true
+    },
+    {
+      "kind": "Experience",
+      "title": "Robotics Project Intern",
+      "organization": "MARS C-IoT Lab",
+      "period": "Present",
+      "description": "Developing a quadruped robot at MARS C-IoT Lab, focusing on CAD modelling, inverse kinematics, and PyBullet simulation.",
+      "showOnHome": true
+    },
+    {
+      "kind": "Experience",
+      "title": "General Technical Body Member",
+      "organization": "IEEE Robotics and Automation Society (RAS)",
+      "period": "Present",
+      "description": "Participating in robotics-focused workshops and technical activities related to automation and embedded systems.",
+      "showOnHome": true
+    }
+  ],
+  "footer": "Robotics, embedded systems & simulation",
+  "projectsIntro": "Engineering case studies, prototypes, and simulation work.",
+  "contactIntro": "Reach me through the professional links below."
+}
+

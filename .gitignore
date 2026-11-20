@@ -1,0 +1,11 @@
+dist/
+node_modules/
+.env
+.env.*
+!.env.example
+.sanity/
+studio/dist/
+public/media/resume.pdf
+studio/seed.ndjson
+.build-*/
+.test-build-*/

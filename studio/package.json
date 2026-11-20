@@ -1,0 +1,2 @@
+{"name":"portfolio-studio","private":true,"type":"module","scripts":{"dev":"sanity dev","build":"sanity build","deploy":"sanity deploy","import":"sanity dataset import"},"dependencies":{"sanity":"^4.0.0","react":"^19.0.0","react-dom":"^19.0.0","styled-components":"^6.1.15"}}
+

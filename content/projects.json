@@ -1,0 +1,3343 @@
+[
+  {
+    "_id": "project-quadruped",
+    "_type": "project",
+    "title": "12-DOF Quadruped Robotic Platform",
+    "slug": "quadruped",
+    "summary": "Design and pre-fabrication validation of a 12-DOF quadruped through CAD, structural analysis, inverse kinematics, gait simulation, and IMU posture stabilization.",
+    "status": "Simulation",
+    "primaryCategory": "Robotics",
+    "isFeatured": true,
+    "sortOrder": 0,
+    "evidence": "Simulation",
+    "tags": [
+      "Quadruped",
+      "Inverse kinematics",
+      "Gait control",
+      "FEA",
+      "IMU"
+    ],
+    "hardware": [
+      "MG996R servo (modeled)"
+    ],
+    "software": [
+      "Fusion 360",
+      "SolidWorks",
+      "MATLAB",
+      "URDF",
+      "PyBullet"
+    ],
+    "repositoryUrl": "https://github.com/Nihalreji20/quadruped_mars_lab",
+    "reportUrl": "https://github.com/Nihalreji20/quadruped_mars_lab/blob/main/Quadruped_Design_Validation_Report_Final.pdf",
+    "coverImage": {
+      "file": "quadruped/cad-assembly.jpeg",
+      "alt": "Fusion 360 assembly of the 12-DOF quadruped",
+      "caption": "Fusion 360 assembly of the 12-DOF quadruped",
+      "width": 1128,
+      "height": 733
+    },
+    "body": [
+      {
+        "_type": "fileBlock",
+        "_key": "body-0",
+        "title": "Download the full design validation report (PDF)",
+        "localFile": "quadruped/Quadruped_Design_Validation_Report_Final.pdf"
+      },
+      {
+        "_type": "block",
+        "_key": "body-1",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "Project overview",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-2",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "The four legs are arranged symmetrically, with three degrees of freedom per leg. The chassis keeps the center of mass near the middle, and the gait shifts it toward the supporting legs before lifting a foot.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-3",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "1. CAD design",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-4",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "The Fusion 360 assembly places the legs symmetrically around a central chassis.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-5",
+        "image": {
+          "file": "quadruped/cad-assembly.jpeg",
+          "alt": "Fusion 360 quadruped assembly",
+          "caption": "Fusion 360 quadruped assembly",
+          "width": 1128,
+          "height": 733
+        }
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-6",
+        "image": {
+          "file": "quadruped/cad-multiview.jpeg",
+          "alt": "Quadruped CAD model from multiple viewpoints",
+          "caption": "Quadruped CAD model from multiple viewpoints",
+          "width": 1199,
+          "height": 481
+        }
+      },
+      {
+        "_type": "block",
+        "_key": "body-7",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "2. Structural validation",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-8",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "The SolidWorks static model used an acrylic base plate, PLA structural members and fixed supports at the legs. Gravity represented the load from the robot and its electronics. The greatest displacement reported was about 1.77 mm near the middle of the base plate. The factor-of-safety study provides a baseline for deciding where to reinforce the prototype.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-9",
+        "image": {
+          "file": "quadruped/fea-load-setup.jpeg",
+          "alt": "SolidWorks model showing applied loads and fixed supports",
+          "caption": "SolidWorks model showing applied loads and fixed supports",
+          "width": 812,
+          "height": 565
+        }
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-10",
+        "image": {
+          "file": "quadruped/fea-displacement.jpeg",
+          "alt": "SolidWorks displacement plot for the loaded base plate",
+          "caption": "SolidWorks displacement plot for the loaded base plate",
+          "width": 1300,
+          "height": 643
+        }
+      },
+      {
+        "_type": "block",
+        "_key": "body-11",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "3. MATLAB inverse kinematics",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-12",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "The MATLAB tool maps requested foot positions to joint angles and checks them against servo limits. It marks unreachable poses in red.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-13",
+        "image": {
+          "file": "quadruped/matlab-ik-valid.png",
+          "alt": "MATLAB interface showing a reachable leg pose",
+          "caption": "MATLAB interface showing a reachable leg pose",
+          "width": 996,
+          "height": 478
+        }
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-14",
+        "image": {
+          "file": "quadruped/matlab-ik-unreachable.jpeg",
+          "alt": "MATLAB interface flagging an unreachable leg pose",
+          "caption": "MATLAB interface flagging an unreachable leg pose",
+          "width": 1003,
+          "height": 520
+        }
+      },
+      {
+        "_type": "block",
+        "_key": "body-15",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "4. URDF and PyBullet validation",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-16",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "A single-leg URDF model was used in PyBullet to check that the joint commands calculated by inverse kinematics move the simulated leg as intended.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-17",
+        "image": {
+          "file": "quadruped/urdf-single-leg.png",
+          "alt": "Single-leg URDF model in PyBullet",
+          "caption": "Single-leg URDF model in PyBullet",
+          "width": 997,
+          "height": 827
+        }
+      },
+      {
+        "_type": "block",
+        "_key": "body-18",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "5. Static standing validation",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-19",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "The free-base simulation checked whether the robot could hold its standing posture within the modeled MG996R servo torque limits.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "tableBlock",
+        "_key": "body-20",
+        "title": "Reported standing simulation results",
+        "headers": [
+          "Metric",
+          "Result",
+          "Outcome"
+        ],
+        "rows": [
+          {
+            "_type": "tableRow",
+            "_key": "row-0",
+            "cells": [
+              "Ground clearance",
+              "0.1308 m",
+              "Pass"
+            ]
+          },
+          {
+            "_type": "tableRow",
+            "_key": "row-1",
+            "cells": [
+              "Sag or drift after settling",
+              "0.0000 m",
+              "Pass"
+            ]
+          },
+          {
+            "_type": "tableRow",
+            "_key": "row-2",
+            "cells": [
+              "Maximum roll",
+              "0.00°",
+              "Pass"
+            ]
+          },
+          {
+            "_type": "tableRow",
+            "_key": "row-3",
+            "cells": [
+              "Maximum pitch",
+              "0.00°",
+              "Pass"
+            ]
+          },
+          {
+            "_type": "tableRow",
+            "_key": "row-4",
+            "cells": [
+              "Maximum joint error",
+              "0.00°",
+              "Pass"
+            ]
+          }
+        ]
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-21",
+        "image": {
+          "file": "quadruped/static-standing.jpeg",
+          "alt": "Quadruped in the free-base standing simulation",
+          "caption": "Quadruped in the free-base standing simulation",
+          "width": 985,
+          "height": 783
+        }
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-22",
+        "image": {
+          "file": "quadruped/standing-diagnostics.png",
+          "alt": "Diagnostics for the static standing simulation",
+          "caption": "Diagnostics for the static standing simulation",
+          "width": 677,
+          "height": 291
+        }
+      },
+      {
+        "_type": "block",
+        "_key": "body-23",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "6. Forward crawl gait with center-of-mass stabilization",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-24",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "Before each swing, the controller shifts the center of mass toward the supporting legs to make the continuous crawl more stable on flat ground.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-25",
+        "image": {
+          "file": "quadruped/forward-crawl.jpeg",
+          "alt": "Quadruped during the forward crawl simulation",
+          "caption": "Quadruped during the forward crawl simulation",
+          "width": 947,
+          "height": 807
+        }
+      },
+      {
+        "_type": "videoBlock",
+        "_key": "body-26",
+        "title": "Forward crawl gait simulation",
+        "url": "https://drive.google.com/file/d/1icYhJY385csE4f64TvMkRzeLU5wFtsxe/view?usp=sharing",
+        "summary": "See the support-leg weight shift during the forward crawl in the video linked from page 7 of the report."
+      },
+      {
+        "_type": "block",
+        "_key": "body-27",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "7. Differential turning gait",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-28",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "The legs on opposite sides sweep in opposite directions during stance to rotate the robot while maintaining support.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-29",
+        "image": {
+          "file": "quadruped/turning-gait.jpeg",
+          "alt": "Quadruped in the differential turning simulation",
+          "caption": "Quadruped in the differential turning simulation",
+          "width": 952,
+          "height": 773
+        }
+      },
+      {
+        "_type": "videoBlock",
+        "_key": "body-30",
+        "title": "Differential turning simulation",
+        "url": "https://drive.google.com/file/d/18FGKEcaTgiQZbJDWVjHjFIrQXt_vnNxh/view?usp=sharing",
+        "summary": "See the turning gait in the video linked from page 8 of the report."
+      },
+      {
+        "_type": "block",
+        "_key": "body-31",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "8. Unified simulation framework",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-32",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "One simulator switches among forward crawl, left and right turns, and stop during a single run.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-33",
+        "image": {
+          "file": "quadruped/unified-simulator.png",
+          "alt": "Unified simulator interface with locomotion mode controls",
+          "caption": "Unified simulator interface with locomotion mode controls",
+          "width": 971,
+          "height": 795
+        }
+      },
+      {
+        "_type": "block",
+        "_key": "body-34",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "9. IMU-based roll and pitch stabilization",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-35",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "The simulated IMU reports orientation and angular velocity. Feedback from it drives vertical leg corrections that stabilize roll and pitch during walking and turning.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-36",
+        "image": {
+          "file": "quadruped/imu-stabilization.png",
+          "alt": "Simulation view of IMU-driven posture stabilization",
+          "caption": "Simulation view of IMU-driven posture stabilization",
+          "width": 913,
+          "height": 786
+        }
+      },
+      {
+        "_type": "figureBlock",
+        "_key": "body-37",
+        "image": {
+          "file": "quadruped/imu-telemetry.png",
+          "alt": "Simulated IMU telemetry in the console",
+          "caption": "Simulated IMU telemetry in the console",
+          "width": 938,
+          "height": 756
+        }
+      },
+      {
+        "_type": "block",
+        "_key": "body-38",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "Validation summary",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-39",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "The report records simulation validation for structural FEA, inverse kinematics, single-leg motion, standing, forward crawl, turning, the combined simulator, and simulated IMU feedback for roll and pitch.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-40",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "Next steps",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "block",
+        "_key": "body-41",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "text",
+            "text": "Fabricate the prototype, integrate the actuators and electronics, and check how the simulation results compare with the physical robot.",
+            "marks": []
+          }
+        ]
+      },
+      {
+        "_type": "linkBlock",
+        "_key": "body-42",
+        "title": "Read the original README on GitHub",
+        "url": "https://github.com/Nihalreji20/quadruped_mars_lab/blob/main/README.md"
+      }
+    ]
+  },
+  {
+    "_id": "project-vectordrive",
+    "_type": "project",
+    "title": "VectorDrive: Adaptive PID High Speed Line Follower",
+    "slug": "vectordrive",
+    "status": "Prototype",
+    "primaryCategory": "Robotics",
+    "tags": [
+      "Line following",
+      "Adaptive PID",
+      "Embedded control"
+    ],
+    "summary": "A high-speed line-following robot with direct ADC register access, adaptive PID, and battery-voltage compensation.",
+    "hardware": [
+      "Arduino Nano / ATmega328P",
+      "8-channel IR array",
+      "Dual H-bridge motor driver"
+    ],
+    "software": [
+      "Arduino",
+      "C++"
+    ],
+    "isFeatured": true,
+    "sortOrder": 1,
+    "repositoryUrl": "https://github.com/Nihalreji20/Line-follower-",
+    "demoUrl": "https://www.youtube.com/watch?v=B0RJNDL_aM8",
+    "coverImage": {
+      "file": "vectordrive.jpg",
+      "width": 1280,
+      "height": 720,
+      "alt": "VectorDrive robot electronics and wiring on its chassis",
+      "caption": "Cover image from the VectorDrive video demo."
+    },
+    "body": [
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Overview",
+            "marks": []
+          }
+        ],
+        "_key": "body-0"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "VectorDrive is a high-frequency, embedded autonomous navigation system designed for high-speed line tracking on complex geometries. It leverages ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": "direct ADC register manipulation",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": " for ultra-low latency sensing and implements ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-3",
+            "text": "voltage-compensated adaptive PID control",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-4",
+            "text": " to ensure consistent kinematic performance regardless of battery discharge curves.",
+            "marks": []
+          }
+        ],
+        "_key": "body-1"
+      },
+      {
+        "_type": "videoBlock",
+        "title": "VectorDrive demo",
+        "url": "https://www.youtube.com/watch?v=B0RJNDL_aM8",
+        "summary": "The demo shows the VectorDrive line follower on a track.",
+        "_key": "body-2"
+      },
+      {
+        "_type": "linkBlock",
+        "title": "View the original animated demo (GIF)",
+        "url": "https://github.com/user-attachments/assets/c74c64aa-6dd4-45f4-a26e-4c65b108e6ee",
+        "_key": "body-3"
+      },
+      {
+        "_type": "linkBlock",
+        "title": "View the repository video (MP4)",
+        "url": "https://github.com/Nihalreji20/Line-follower-/blob/main/LF.mp4",
+        "_key": "body-4"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Key Engineering Features",
+            "marks": []
+          }
+        ],
+        "_key": "body-5"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Voltage-Agnostic Velocity Control:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " Implements a dynamic ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": "VOLTAGE_MULTIPLIER",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-3",
+            "text": " derived from real-time battery monitoring ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-4",
+            "text": "ADC_REF / CURRENT_BAT",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-5",
+            "text": "). This scales PWM output to maintain constant motor RPM as battery voltage drops, eliminating the \"slowdown\" effect during long runs.",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-6"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Heuristic Adaptive PID:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " Features a non-linear control loop that dynamically boosts ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": "Kp",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-3",
+            "text": " and ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-4",
+            "text": "Kd",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-5",
+            "text": " gains by ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-6",
+            "text": "1.5x",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-7",
+            "text": " when ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-8",
+            "text": "abs(error) > 10",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-9",
+            "text": ". This allows for smooth oscillation-free straight-line driving while providing aggressive torque response during acute cornering.",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-7"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Optimized ADC Latency:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " Bypasses standard Arduino ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": "analogRead",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-3",
+            "text": " overhead by directly manipulating the ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-4",
+            "text": "ADCSRA",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-5",
+            "text": " registers ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-6",
+            "text": "sbicbi",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-7",
+            "text": " macros), setting prescalers to minimize sensor integration time without sacrificing resolution.",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-8"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Robust Failsafe Recovery:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " Implements a \"Last Known State\" memory buffer. If the line is lost, the system utilizes the ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": "lastError",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-3",
+            "text": " polarity to execute a hard recovery turn in the direction of the track, rather than drifting aimlessly.",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-9"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "System Architecture",
+            "marks": []
+          }
+        ],
+        "_key": "body-10"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The system operates on a closed-loop feedback mechanism governed by a custom PID controller.",
+            "marks": []
+          }
+        ],
+        "_key": "body-11"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "1. Perception Layer (8-Channel Array)",
+            "marks": []
+          }
+        ],
+        "_key": "body-12"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The sensor array output is normalized using a dynamic thresholding map. The error is calculated using a weighted average of active sensors:",
+            "marks": []
+          }
+        ],
+        "_key": "body-13"
+      },
+      {
+        "_type": "equationBlock",
+        "title": "Weighted sensor error",
+        "notation": "Error = Σ(Sensorᵢ × Weightᵢ) / Σ(ActiveSensors)",
+        "_key": "body-14"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Weights:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " Symmetric distribution ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": "[20, 8, 2, 1, -1, -2, -8, -20]",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-3",
+            "text": " prioritizes center alignment while penalizing deviation exponentially.",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-15"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "2. Control Algorithm (PID)",
+            "marks": []
+          }
+        ],
+        "_key": "body-16"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The corrected motor output is derived from the standard PID formulation with the adaptive gain injection:",
+            "marks": []
+          }
+        ],
+        "_key": "body-17"
+      },
+      {
+        "_type": "equationBlock",
+        "title": "Adaptive PID output",
+        "notation": "u(t) = Kₚ(adaptive) e(t) + Kᵢ ∫ e(t) dt + K𝒹(adaptive) de/dt",
+        "_key": "body-18"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "3. Actuation Layer",
+            "marks": []
+          }
+        ],
+        "_key": "body-19"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Base Speed:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " 110 PWM (Voltage Compensated)",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-20"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Differential Drive:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " The PID output is added/subtracted from the base speed to generate differential thrust.",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-21"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Drivers:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " Supports Dual H-Bridge configuration (AIN/BIN logic).",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-22"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Getting Started",
+            "marks": []
+          }
+        ],
+        "_key": "body-23"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Hardware Requirements",
+            "marks": []
+          }
+        ],
+        "_key": "body-24"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Microcontroller:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " ATmega328P based board (Arduino Nano)",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-25"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Sensors:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " 8-Channel IR Reflectance Array (Digital/Analog)",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-26"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Driver:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " TB6612FNG or L298N Dual Motor Driver",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-27"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Power:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " 2S/3S LiPo Battery (Voltage divider on ADC 3 required)",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-28"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Installation",
+            "marks": []
+          }
+        ],
+        "_key": "body-29"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "1.  Clone the repository:",
+            "marks": []
+          }
+        ],
+        "_key": "body-30"
+      },
+      {
+        "_type": "codeBlock",
+        "language": "bash",
+        "code": "    git clone https://github.com/Nihalreji20/Line-follower-.git",
+        "_key": "body-31"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "2.  Pin Configuration:",
+            "marks": []
+          }
+        ],
+        "_key": "body-32"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Ensure your hardware matches the pin definitions in the macro section:",
+            "marks": []
+          }
+        ],
+        "_key": "body-33"
+      },
+      {
+        "_type": "codeBlock",
+        "language": "cpp",
+        "code": "    #define AIN1 4  // Left Motor Logic 1\n    #define BIN1 6  // Right Motor Logic 1\n    #define CALIBRATE_BTN 11",
+        "_key": "body-34"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "3.  Calibration:",
+            "marks": []
+          }
+        ],
+        "_key": "body-35"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Preset:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " Set ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": "USE_PRESET_CALIBRATION = true",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-3",
+            "text": " if you have hardcoded values.",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-36"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Manual:",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " Set to ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": "false",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-3",
+            "text": ". Hold the ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-4",
+            "text": "CALIBRATE_BTN",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-5",
+            "text": " on boot and sweep the robot across the line for 3 seconds.",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-37"
+      },
+      {
+        "_type": "linkBlock",
+        "title": "Read the original README on GitHub",
+        "url": "https://github.com/Nihalreji20/Line-follower-/blob/main/README.md",
+        "_key": "body-38"
+      }
+    ]
+  },
+  {
+    "_id": "project-geonavigator",
+    "_type": "project",
+    "title": "GeoNavigator",
+    "slug": "geonavigator",
+    "status": "Prototype",
+    "primaryCategory": "Robotics",
+    "tags": [
+      "Dead reckoning",
+      "Waypoint navigation",
+      "Sensor fusion"
+    ],
+    "summary": "An ESP32 robot that follows waypoints from a browser interface and estimates its position with wheel encoders and an IMU.",
+    "hardware": [
+      "ESP32 DevKit V1",
+      "DRV8833",
+      "N20 motors with encoders",
+      "ISM330DHCX",
+      "LSM303AGR"
+    ],
+    "software": [
+      "PlatformIO",
+      "FreeRTOS",
+      "WebSocket"
+    ],
+    "isFeatured": true,
+    "sortOrder": 2,
+    "repositoryUrl": "https://github.com/Nihalreji20/GEO--Navigator",
+    "demoUrl": "https://www.youtube.com/watch?v=wE72Vkd57ok",
+    "coverImage": {
+      "file": "geonavigator.jpg",
+      "width": 1280,
+      "height": 720,
+      "alt": "GeoNavigator robot with its decorated top, acrylic chassis, wheels, and exposed electronics",
+      "caption": "Cover image from the GeoNavigator video demo."
+    },
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "A small robot that can navigate to coordinates using dead reckoning. Built for a robotics project.",
+            "marks": []
+          }
+        ],
+        "_key": "body-0"
+      },
+      {
+        "_type": "videoBlock",
+        "title": "GeoNavigator demo",
+        "url": "https://www.youtube.com/watch?v=wE72Vkd57ok",
+        "summary": "The robot traces a square, triangle, circle, and the Ursa Minor constellation.",
+        "_key": "body-1"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "What it does",
+            "marks": []
+          }
+        ],
+        "_key": "body-2"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Drives to waypoints you set on a web interface",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-3"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Tracks position using wheel encoders + gyro",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-4"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Hosts its own WiFi so you can control it from your phone/laptop",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-5"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Can draw shapes (squares, circles, triangles)",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-6"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Hardware I used",
+            "marks": []
+          }
+        ],
+        "_key": "body-7"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "ESP32 DevKit V1",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-8"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "DRV8833 Motor Driver Module",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-9"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "N20 Gear Motors with Encoders (x2) - 6V, 200RPM, 50:1 ratio",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-10"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "ISM330DHCX IMU Breakout Board",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-11"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "LSM303AGR IMU Breakout Board",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-12"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "3S LiPo Battery (11.1V, 1000mAh)",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-13"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Wheels (34mm diameter) x2",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-14"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Ball Caster Wheel",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-15"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Acrylic Chassis",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-16"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Wiring",
+            "marks": []
+          }
+        ],
+        "_key": "body-17"
+      },
+      {
+        "_type": "codeBlock",
+        "language": "Plain text",
+        "code": "ESP32          Component\n-----          ---------\nGPIO14    →    Right Motor Forward\nGPIO27    →    Right Motor Backward\nGPIO26    →    Left Motor Forward\nGPIO25    →    Left Motor Backward\nGPIO4     →    Left Encoder A\nGPIO18    →    Left Encoder B\nGPIO19    →    Right Encoder A\nGPIO23    →    Right Encoder B\nGPIO21    →    IMU SDA\nGPIO22    →    IMU SCL",
+        "_key": "body-18"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "How to set up",
+            "marks": []
+          }
+        ],
+        "_key": "body-19"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "You need PlatformIO installed (I used the VS Code extension).",
+            "marks": []
+          }
+        ],
+        "_key": "body-20"
+      },
+      {
+        "_type": "codeBlock",
+        "language": "bash",
+        "code": "cd esp32_firmware\n\n# flash the firmware\npio run -t upload\n\n# upload the web files\npio run -t uploadfs",
+        "_key": "body-21"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Then connect to the WiFi called \"GeoNavigator\" (see the repository README for the demo network credentials) and go to http://192.168.4.1 in your browser.",
+            "marks": []
+          }
+        ],
+        "_key": "body-22"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Calibration",
+            "marks": []
+          }
+        ],
+        "_key": "body-23"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "You'll probably need to calibrate it for your robot. The important values are in ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": "include/config.h",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": ":",
+            "marks": []
+          }
+        ],
+        "_key": "body-24"
+      },
+      {
+        "_type": "codeBlock",
+        "language": "cpp",
+        "code": "#define WHEEL_DIAMETER_MM 34.0f    // measure your wheels\n#define WHEEL_BASE_MM 160.0f       // distance between wheels\n#define ENCODER_CPR 549            // encoder counts per revolution",
+        "_key": "body-25"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "For the encoder calibration, I pushed the robot exactly 1 meter by hand and checked how many encoder counts it reported, then adjusted CPR until the distance matched.",
+            "marks": []
+          }
+        ],
+        "_key": "body-26"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "How it works",
+            "marks": []
+          }
+        ],
+        "_key": "body-27"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The ESP32 runs two tasks:",
+            "marks": []
+          }
+        ],
+        "_key": "body-28"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Core 0",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " - Physics loop at 50Hz (reads sensors, runs PID, controls motors)",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-29"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Core 1",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": " - Handles WebSocket and sends telemetry",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-30"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "For navigation it uses a simple turn-then-drive approach:",
+            "marks": []
+          }
+        ],
+        "_key": "body-31"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Calculate heading to target",
+            "marks": []
+          }
+        ],
+        "listItem": "number",
+        "level": 1,
+        "_key": "body-32"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Rotate until facing the target",
+            "marks": []
+          }
+        ],
+        "listItem": "number",
+        "level": 1,
+        "_key": "body-33"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Drive straight until reaching the target",
+            "marks": []
+          }
+        ],
+        "listItem": "number",
+        "level": 1,
+        "_key": "body-34"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Move to next waypoint",
+            "marks": []
+          }
+        ],
+        "listItem": "number",
+        "level": 1,
+        "_key": "body-35"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The heading comes from the gyro (fast but drifts) combined with magnetometer (slow but absolute) using a complementary filter.",
+            "marks": []
+          }
+        ],
+        "_key": "body-36"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Files",
+            "marks": []
+          }
+        ],
+        "_key": "body-37"
+      },
+      {
+        "_type": "codeBlock",
+        "language": "Plain text",
+        "code": "esp32_firmware/\n├── src/\n│   ├── main.cpp              # setup and freertos tasks\n│   ├── imu.cpp               # gyro + magnetometer\n│   ├── encoders.cpp          # quadrature decoding\n│   ├── kinematics.cpp        # position tracking\n│   ├── state_machine.cpp     # navigation logic\n│   └── websocket_handler.cpp # communication\n├── include/\n│   └── config.h              # all the calibration values\n└── data/                     # web interface files\n\nwebapp/                       # source for the web interface",
+        "_key": "body-38"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Web interface commands",
+            "marks": []
+          }
+        ],
+        "_key": "body-39"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The interface talks to the robot over WebSocket (port 81) using JSON:",
+            "marks": []
+          }
+        ],
+        "_key": "body-40"
+      },
+      {
+        "_type": "codeBlock",
+        "language": "json",
+        "code": "// go to a point\n{\"cmd\": \"GOTO\", \"target\": {\"x\": 1.0, \"y\": 0.5}, \"speed\": 0.3}\n\n// follow a path\n{\"cmd\": \"PATH\", \"waypoints\": [{\"x\": 0, \"y\": 1}, {\"x\": 1, \"y\": 1}], \"speed\": 0.3}\n\n// stop\n{\"cmd\": \"STOP\"}\n\n// reset position to origin\n{\"cmd\": \"RESET\"}",
+        "_key": "body-41"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "License",
+            "marks": []
+          }
+        ],
+        "_key": "body-42"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "MIT",
+            "marks": []
+          }
+        ],
+        "_key": "body-43"
+      },
+      {
+        "_type": "linkBlock",
+        "title": "Read the original README on GitHub",
+        "url": "https://github.com/Nihalreji20/GEO--Navigator/blob/main/README.md",
+        "_key": "body-44"
+      }
+    ]
+  },
+  {
+    "_id": "project-odin",
+    "_type": "project",
+    "title": "ODIN – Productivity & Task Management System",
+    "slug": "odin",
+    "status": "In Progress",
+    "primaryCategory": "Software",
+    "tags": [
+      "Productivity",
+      "Keyboard shortcuts",
+      "Pomodoro"
+    ],
+    "summary": "A keyboard-first web workspace for tasks, goals, calendar events, focus sessions, and personal notes.",
+    "software": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ],
+    "isFeatured": false,
+    "sortOrder": 3,
+    "repositoryUrl": "https://github.com/Nihalreji20/ODIN",
+    "demoUrl": "https://www.youtube.com/watch?v=w9DVEHxZn8Y",
+    "coverImage": {
+      "file": "odin.jpg",
+      "width": 1280,
+      "height": 603,
+      "alt": "ODIN Command Center with sidebar navigation, task count, upcoming event, and goal progress",
+      "caption": "Dashboard from the ODIN video demo."
+    },
+    "body": [
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "ODIN is a productivity-focused web application designed to help users organize tasks, goals, schedules, and personal notes in one centralized workspace. The project focuses on creating a lightweight and fast productivity environment with keyboard-first workflows and an intuitive dashboard.",
+            "marks": []
+          }
+        ],
+        "_key": "body-0"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Overview",
+            "marks": []
+          }
+        ],
+        "_key": "body-1"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "ODIN acts as a personal productivity hub where users can manage their daily work, track goals, schedule events, and maintain personal notes. The system combines multiple productivity tools into a single interface to reduce friction when managing different aspects of personal organization.",
+            "marks": []
+          }
+        ],
+        "_key": "body-2"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Key Features",
+            "marks": []
+          }
+        ],
+        "_key": "body-3"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Task Management",
+            "marks": []
+          }
+        ],
+        "_key": "body-4"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Create tasks quickly using a simple interface",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-5"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Edit existing tasks",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-6"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Track upcoming tasks from the dashboard",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-7"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Fast task creation workflow",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-8"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Goals Management",
+            "marks": []
+          }
+        ],
+        "_key": "body-9"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Create and edit personal goals",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-10"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Track goals alongside tasks and other productivity items",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-11"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Organized goal tracking within the dashboard",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-12"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Calendar Integration",
+            "marks": []
+          }
+        ],
+        "_key": "body-13"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Add and manage calendar events",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-14"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Edit existing events",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-15"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Upcoming events are displayed directly on the dashboard",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-16"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Unified Dashboard",
+            "marks": []
+          }
+        ],
+        "_key": "body-17"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The dashboard provides a centralized view of:",
+            "marks": []
+          }
+        ],
+        "_key": "body-18"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Upcoming tasks",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-19"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Goals",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-20"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Calendar events",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-21"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "This allows users to quickly understand their schedule and priorities without switching between multiple sections.",
+            "marks": []
+          }
+        ],
+        "_key": "body-22"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Keyboard Shortcuts",
+            "marks": []
+          }
+        ],
+        "_key": "body-23"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "ODIN includes keyboard-driven navigation to improve productivity.",
+            "marks": []
+          }
+        ],
+        "_key": "body-24"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Press:",
+            "marks": []
+          }
+        ],
+        "_key": "body-25"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "\\",
+            "marks": []
+          }
+        ],
+        "_key": "body-26"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "to open the ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": "Quick Create Window",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": ", allowing you to rapidly add:",
+            "marks": []
+          }
+        ],
+        "_key": "body-27"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "New tasks",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-28"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "New goals",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-29"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "New events",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-30"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "This feature enables fast input without navigating through menus.",
+            "marks": []
+          }
+        ],
+        "_key": "body-31"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Pomodoro Timer",
+            "marks": []
+          }
+        ],
+        "_key": "body-32"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "ODIN includes a built-in ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": "Pomodoro timer",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": " to support focused work sessions.",
+            "marks": []
+          }
+        ],
+        "_key": "body-33"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Features include:",
+            "marks": []
+          }
+        ],
+        "_key": "body-34"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Standard Pomodoro workflow",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-35"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Timer-based productivity sessions",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-36"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Integration with task-based work sessions",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-37"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Personal Space",
+            "marks": []
+          }
+        ],
+        "_key": "body-38"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "ODIN provides a ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": "Personal Space",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": " section where users can store:",
+            "marks": []
+          }
+        ],
+        "_key": "body-39"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Personal notes",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-40"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Thoughts",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-41"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Quick ideas",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-42"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Reflections",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-43"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "This allows the application to function not only as a task manager but also as a lightweight personal workspace.",
+            "marks": []
+          }
+        ],
+        "_key": "body-44"
+      },
+      {
+        "_type": "block",
+        "style": "h3",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Finance Section (Upcoming)",
+            "marks": []
+          }
+        ],
+        "_key": "body-45"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "A ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": "Finance module",
+            "marks": [
+              "strong"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": " is planned for integration.",
+            "marks": []
+          }
+        ],
+        "_key": "body-46"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The finance system will be based on another project in this GitHub account:",
+            "marks": []
+          }
+        ],
+        "_key": "body-47"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "FinTrack",
+            "marks": [
+              "strong"
+            ]
+          }
+        ],
+        "_key": "body-48"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "FinTrack is a financial tracking project that will be integrated into ODIN to allow users to manage personal finances directly from the productivity platform.",
+            "marks": []
+          }
+        ],
+        "_key": "body-49"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Technology Stack",
+            "marks": []
+          }
+        ],
+        "_key": "body-50"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The project is built using core web technologies:",
+            "marks": []
+          }
+        ],
+        "_key": "body-51"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "HTML",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-52"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "CSS",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-53"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "JavaScript",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-54"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The focus of the project is on simplicity, performance, and usability without relying on heavy frameworks.",
+            "marks": []
+          }
+        ],
+        "_key": "body-55"
+      },
+      {
+        "_type": "videoBlock",
+        "title": "ODIN demo",
+        "url": "https://www.youtube.com/watch?v=w9DVEHxZn8Y",
+        "summary": "A walkthrough of the ODIN productivity dashboard and its tools.",
+        "_key": "body-56"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Future Improvements",
+            "marks": []
+          }
+        ],
+        "_key": "body-57"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Planned improvements include:",
+            "marks": []
+          }
+        ],
+        "_key": "body-58"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Full integration of the FinTrack financial management module",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-59"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Data persistence using local storage or a backend database",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-60"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "UI/UX improvements for dashboard visualization",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-61"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Additional keyboard shortcuts",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-62"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Mobile responsiveness improvements",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-63"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Advanced productivity analytics",
+            "marks": []
+          }
+        ],
+        "listItem": "bullet",
+        "level": 1,
+        "_key": "body-64"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "How to Run the Project",
+            "marks": []
+          }
+        ],
+        "_key": "body-65"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Clone the repository",
+            "marks": []
+          }
+        ],
+        "listItem": "number",
+        "level": 1,
+        "_key": "body-66"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Navigate to the project folder",
+            "marks": []
+          }
+        ],
+        "listItem": "number",
+        "level": 1,
+        "_key": "body-67"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Open ",
+            "marks": []
+          },
+          {
+            "_type": "span",
+            "_key": "span-1",
+            "text": "index.html",
+            "marks": [
+              "code"
+            ]
+          },
+          {
+            "_type": "span",
+            "_key": "span-2",
+            "text": " in your browser",
+            "marks": []
+          }
+        ],
+        "listItem": "number",
+        "level": 1,
+        "_key": "body-68"
+      },
+      {
+        "_type": "block",
+        "style": "h2",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "Project Goal",
+            "marks": []
+          }
+        ],
+        "_key": "body-69"
+      },
+      {
+        "_type": "block",
+        "style": "normal",
+        "markDefs": [],
+        "children": [
+          {
+            "_type": "span",
+            "_key": "span-0",
+            "text": "The goal of ODIN is to create a unified productivity platform that combines task management, scheduling, goal tracking, personal notes, and financial tracking into a single cohesive workspace.",
+            "marks": []
+          }
+        ],
+        "_key": "body-70"
+      },
+      {
+        "_type": "linkBlock",
+        "title": "Read the original README on GitHub",
+        "url": "https://github.com/Nihalreji20/ODIN/blob/main/README.md",
+        "_key": "body-71"
+      }
+    ]
+  }
+]
