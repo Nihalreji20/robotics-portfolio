@@ -18,6 +18,7 @@ if (base && !/^\/[a-zA-Z0-9._-]+$/.test(base)) throw Error('Invalid BASE_PATH')
 const path = route => base + route
 const site = process.env.SITE_ORIGIN ? new URL(process.env.SITE_ORIGIN).origin : ''
 const {profile:p, projects, certificates, local} = await loadContent()
+const alternateNames = ['Nihal Reji','Nihal R','Nihal'].filter(name=>name!==p.name)
 const nav = [['/','Home'],['/about/','About'],['/projects/','Projects'],['/skills/','Skills & Tools'],['/education-experience/','Education & Experience'],['/certificates/','Certificates'],['/resume/','Resume'],['/contact/','Contact']]
 const a = (route,label,cls='') => '<a class="'+cls+'" href="'+e(path(route))+'">'+e(label)+'</a>'
 const external = (href,label,cls='') => href ? '<a class="'+cls+'" href="'+e(href)+'">'+e(label)+'</a>' : ''
@@ -73,7 +74,7 @@ const options = (label,all,values)=>'<label>'+label+'<select name="'+label.toLow
 const filters = '<form id="filters" class="filters" hidden><label>Search<input type="search" name="q" placeholder="Title, technology or keyword"></label>'+options('Category','All categories',projects.map(x=>x.primaryCategory))+options('Status','All statuses',projects.map(x=>x.status))+'<label>Sort<select name="sort"><option value="">Featured / relevance</option><option value="recent">Recently updated</option></select></label><button class="button" type="reset">Clear filters</button></form>'
 const pages = [
   ['/','Home',p.intro,home,p.photo?.url || (local?path('/media/portrait.jpg'):'')],
-  ['/about/','About me',p.homeAbout,heading('01 / Profile','About me')+'<div class="reading">'+paragraphs(p.about)+'<div class="actions">'+socials+(resume?a('/resume/','View resume →'):'')+'</div></div>'],
+  ['/about/','About '+p.name,p.homeAbout,heading('01 / Profile','About '+p.name)+'<div class="reading"><p>Also known as '+e(alternateNames.join(' and '))+'.</p>'+paragraphs(p.about)+'<div class="actions">'+socials+(resume?a('/resume/','View resume →'):'')+'</div></div>'],
   ['/projects/','Projects',p.projectsIntro,heading('02 / Project library','Projects',p.projectsIntro)+(projects.length?filters+'<p id="results" role="status"></p>'+grid(projects)+'<script defer src="'+path('/filters.js')+'"></script>':'<section class="empty"><p class="eyebrow">Project library</p><h2>No projects published yet</h2><p>Case studies will appear here as they’re published.</p>'+a('/skills/','Explore skills & tools →')+'</section>')],
   ['/skills/','Skills & tools','Engineering skills and tools',heading('03 / Toolkit','Skills & tools')+skillGrid(false)],
   ['/education-experience/','Education & experience','Education and technical experience',heading('04 / Background','Education & experience')+history(false)],
@@ -89,11 +90,22 @@ for(const x of projects){
   '<div class="actions">'+external(url(x.repositoryUrl),'Repository ↗','button')+external(url(x.demoUrl),'Demo ↗','button')+external(url(x.reportUrl),'Report ↗','button')+'</div><dl class="project-facts">'+meta.filter(([,v])=>v).map(([k,v])=>'<div><dt>'+e(k)+'</dt><dd>'+e(v)+'</dd></div>').join('')+'</dl><div class="reading article">'+renderBody(x.body,localMedia)+(related.length?'<h2>Related projects</h2><ul>'+related.map(link=>'<li>'+link+'</li>').join('')+'</ul>':'')+'</div>',x.socialImage?.url||x.coverImage?.url||localMedia(x.coverImage?.file),x.seoTitle])
 }
 function layout(route,title,description,body,socialImage,seoTitle){
- const fullTitle = (seoTitle || (route==='/'?p.descriptor:title))+' | '+p.name
+ const isHome = route==='/'
+ const fullTitle = isHome ? p.name+' | Robotics & Embedded Systems Portfolio' : (seoTitle || title)+' | '+p.name
+ const pageDescription = isHome ? 'Robotics, embedded systems, and simulation projects by '+p.name+' ('+alternateNames[0]+').' : description
  const canonical = site && route !== '/404.html' ? site+path(route) : ''
  const social = socialImage && site ? new URL(socialImage,site).href : ''
+ const sameAs = links.filter(([,label])=>label==='GitHub' || label==='LinkedIn').map(([href])=>href).filter(Boolean)
+ const structuredProfile = isHome && canonical ? '<script type="application/ld+json">'+JSON.stringify({
+   '@context':'https://schema.org','@type':'ProfilePage',url:canonical,
+   mainEntity:{
+    '@type':'Person','@id':canonical+'#nihal',name:p.name,alternateName:alternateNames,
+    description:p.descriptor,url:canonical,
+    ...(social?{image:social}:{}),...(sameAs.length?{sameAs}:{})
+   }
+ }).replaceAll('<','\\u003c')+'</script>' : ''
  const navLinks = nav.map(([href,label])=>'<a href="'+path(href)+'"'+(route===href || (href==='/projects/'&&route.startsWith(href))?' aria-current="'+(route===href?'page':'location')+'"':'')+'>'+e(label)+'</a>').join('')
- return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+e(fullTitle)+'</title><meta name="description" content="'+e(description)+'"><meta property="og:type" content="website"><meta property="og:title" content="'+e(fullTitle)+'"><meta property="og:description" content="'+e(description)+'">'+(canonical?'<link rel="canonical" href="'+e(canonical)+'"><meta property="og:url" content="'+e(canonical)+'">':'')+(social?'<meta property="og:image" content="'+e(social)+'">':'')+(route==='/404.html'?'<meta name="robots" content="noindex">':'')+'<link rel="stylesheet" href="'+path('/site.css')+'"><script defer src="'+path('/menu.js')+'"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap header-row">'+a('/',p.name,'wordmark')+'<button class="button menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" hidden>Menu</button><nav id="main-nav" aria-label="Main navigation">'+navLinks+'</nav></div></header><main id="main" class="wrap" tabindex="-1">'+body+'</main><footer><div class="wrap footer-row"><div><strong>'+e(p.name)+'</strong><p>'+e(p.footer)+'</p><small>© '+new Date().getUTCFullYear()+' '+e(p.name)+'</small></div><nav aria-label="Footer navigation">'+a('/projects/','Projects')+a('/resume/','Resume')+a('/contact/','Contact')+socials+'</nav></div></footer></body></html>'
+ return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+e(fullTitle)+'</title><meta name="description" content="'+e(pageDescription)+'"><meta property="og:type" content="website"><meta property="og:title" content="'+e(fullTitle)+'"><meta property="og:description" content="'+e(pageDescription)+'">'+(canonical?'<link rel="canonical" href="'+e(canonical)+'"><meta property="og:url" content="'+e(canonical)+'">':'')+(social?'<meta property="og:image" content="'+e(social)+'">':'')+structuredProfile+(route==='/404.html'?'<meta name="robots" content="noindex">':'')+'<link rel="stylesheet" href="'+path('/site.css')+'"><script defer src="'+path('/menu.js')+'"></script></head><body><a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap header-row">'+a('/',p.name,'wordmark')+'<button class="button menu-toggle" type="button" aria-controls="main-nav" aria-expanded="false" hidden>Menu</button><nav id="main-nav" aria-label="Main navigation">'+navLinks+'</nav></div></header><main id="main" class="wrap" tabindex="-1">'+body+'</main><footer><div class="wrap footer-row"><div><strong>'+e(p.name)+'</strong><p>'+e(p.footer)+'</p><small>© '+new Date().getUTCFullYear()+' '+e(p.name)+'</small></div><nav aria-label="Footer navigation">'+a('/projects/','Projects')+a('/resume/','Resume')+a('/contact/','Contact')+socials+'</nav></div></footer></body></html>'
 }
 const stage = await mkdtemp('.build-')
 try {

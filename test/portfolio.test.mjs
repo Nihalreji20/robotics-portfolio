@@ -63,6 +63,11 @@ test('root and repository-base builds generate local routes, assets, metadata an
     assert.match(await read(route+'/index.html'),/<h1>/)
    }
    assert.match(home,/https:\/\/example\.com\/portfolio\//)
+   assert.ok(home.includes('<title>Nihal R | Robotics &amp; Embedded Systems Portfolio</title>'))
+   const profileMarkup=JSON.parse(home.match(/<script type="application\/ld\+json">([^<]+)<\/script>/)[1])
+   assert.equal(profileMarkup['@type'],'ProfilePage')
+   assert.equal(profileMarkup.mainEntity.url,'https://example.com/portfolio/')
+   assert.deepEqual(profileMarkup.mainEntity.alternateName,['Nihal Reji','Nihal'])
    assert.match(home,/Selected projects/)
    const projectIndex=await read('projects/index.html')
    for(const [slug,videoId] of [['vectordrive','B0RJNDL_aM8'],['geonavigator','wE72Vkd57ok'],['odin','w9DVEHxZn8Y']]){
