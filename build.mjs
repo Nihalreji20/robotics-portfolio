@@ -1,7 +1,7 @@
 import {access,writeFile,mkdir,cp,mkdtemp,rm,rename} from 'node:fs/promises'
 import {dirname,join} from 'node:path'
 import {loadContent} from './content/load.mjs'
-import {e, paragraphs, url, image, imageTag, renderBody} from './render.mjs'
+import {e, paragraphs, url, image, imageTag, renderBody, icon} from './render.mjs'
 
 if (!process.env.SANITY_PROJECT_ID && !process.env.SANITY_DATASET) {
  try {
@@ -20,7 +20,7 @@ const site = process.env.SITE_ORIGIN ? new URL(process.env.SITE_ORIGIN).origin :
 const {profile:p, projects, certificates, local} = await loadContent()
 const alternateNames = ['Nihal Reji','Nihal R','Nihal'].filter(name=>name!==p.name)
 const nav = [['/','Home'],['/about/','About'],['/projects/','Projects'],['/skills/','Skills & Tools'],['/education-experience/','Education & Experience'],['/certificates/','Certificates'],['/resume/','Resume'],['/contact/','Contact']]
-const a = (route,label,cls='') => '<a class="'+cls+'" href="'+e(path(route))+'">'+e(label)+'</a>'
+const a = (route,label,cls='',symbol='') => '<a class="'+cls+'" href="'+e(path(route))+'">'+(symbol?icon(symbol):'')+e(label)+'</a>'
 const external = (href,label,cls='') => href ? '<a class="'+cls+'" href="'+e(href)+'">'+e(label)+'</a>' : ''
 const links = [
   [p.showEmail && p.email ? 'mailto:'+p.email : '', 'Email'],
@@ -41,7 +41,13 @@ const resumeDownload = resume && (()=>{
 const list = (items=[]) => '<ul class="tags">'+items.map(x=>'<li>'+e(x)+'</li>').join('')+'</ul>'
 const heading = (num,title,intro='') => '<header class="page-head"><p class="eyebrow">'+e(num)+'</p><h1>'+e(title)+'</h1>'+paragraphs(intro)+'</header>'
 const section = (num,title,body,cta='') => '<section class="section"><div class="section-head"><div><p class="eyebrow">'+num+'</p><h2>'+e(title)+'</h2></div>'+cta+'</div>'+body+'</section>'
-const skillGrid = preview => '<div class="skill-grid">'+(p.skills || []).filter(g=>!preview || g.preview?.length).map((g,i)=>'<article><span class="mono">0'+(i+1)+'</span><h'+(preview?3:2)+'>'+e(g.title)+'</h'+(preview?3:2)+'>'+list(preview ? g.preview : g.items)+(preview?'':(g.projects || []).map(x=>projectLink(x)).join(' '))+'</article>').join('')+'</div>'
+const skillIcons = new Map([
+ ['Robotics & Simulation','scan'],
+ ['CAD & Mechanical Design','box'],
+ ['Embedded Systems & Electronics','board'],
+ ['Programming, Vision & Tools','code']
+])
+const skillGrid = preview => '<div class="skill-grid">'+(p.skills || []).filter(g=>!preview || g.preview?.length).map(g=>'<article><span class="skill-icon">'+icon(skillIcons.get(g.title) || 'folder')+'</span><h'+(preview?3:2)+'>'+e(g.title)+'</h'+(preview?3:2)+'>'+list(preview ? g.preview : g.items)+(preview?'':(g.projects || []).map(x=>projectLink(x)).join(' '))+'</article>').join('')+'</div>'
 const history = (preview,level=preview?3:2) => '<ol class="timeline">'+(p.history || []).filter(x=>!preview || x.showOnHome).map(x=>'<li><p class="mono">'+e([x.kind,x.period].filter(Boolean).join(' / '))+'</p><h'+level+'>'+e(x.title)+'</h'+level+'><p>'+e(x.organization)+'</p>'+(preview?'':paragraphs(x.description))+'</li>').join('')+'</ol>'
 const projectRoute = x=>'/projects/'+x.slug+'/'
 const localMedia = file=>local && file ? path('/media/projects/'+file) : ''
@@ -63,7 +69,7 @@ function card(x, level){
 const grid = (xs,level=2)=>'<div class="project-grid" id="project-grid">'+xs.map(x=>card(x,level)).join('')+'</div>'
 const preferred = (p.featuredProjects || []).map(ref=>projects.find(x=>x._id===ref._ref)).filter(Boolean)
 const featured = (preferred.length ? preferred : projects.filter(x=>x.isFeatured)).slice(0,3)
-const home = '<section class="hero'+(portrait?'':' no-photo')+'"><div><p class="eyebrow">Personal portfolio</p><h1>'+e(p.name)+'</h1><p class="descriptor">'+e(p.descriptor)+'</p><div class="lead">'+paragraphs(p.intro)+'</div><div class="actions">'+a('/projects/','Explore projects →','button primary')+(resume?a('/resume/','View resume','button'):'')+'</div>'+(p.showGithub?external(url(p.github),'GitHub ↗','quiet'):'')+'</div>'+(portrait?'<figure class="portrait-frame">'+portrait+'<figcaption><span>01 / Profile</span><span>'+e(p.showLocation?p.location:'')+'</span></figcaption></figure>':'')+'</section>'+
+const home = '<section class="hero'+(portrait?'':' no-photo')+'"><div><p class="eyebrow">Personal portfolio</p><h1>'+e(p.name)+'</h1><p class="descriptor">'+e(p.descriptor)+'</p><div class="lead">'+paragraphs(p.intro)+'</div><div class="actions">'+a('/projects/','Explore projects','button primary','folder')+(resume?a('/resume/','View resume','button','file'):'')+'</div>'+(p.showGithub?external(url(p.github),'GitHub ↗','quiet'):'')+'</div>'+(portrait?'<figure class="portrait-frame">'+portrait+'<figcaption><span>01 / Profile</span><span>'+e(p.showLocation?p.location:'')+'</span></figcaption></figure>':'')+'</section>'+
 ((p.facts||[]).length?'<section class="glance" aria-labelledby="glance"><h2 id="glance" class="eyebrow">At a glance</h2><dl>'+p.facts.filter(f=>p.showLocation || f.value!==p.location).map(f=>'<div><dt>'+e(f.label)+'</dt><dd>'+e(f.value)+'</dd></div>').join('')+'</dl></section>':'')+
 (p.homeAbout?section('01 / Profile','About me','<div class="reading">'+paragraphs(p.homeAbout)+'</div>',a('/about/','More about me →')):'')+
 ((p.skills||[]).some(g=>g.preview?.length)?section('02 / Toolkit','Skills & tools',skillGrid(true),a('/skills/','All skills →')):'')+

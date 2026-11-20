@@ -64,7 +64,9 @@ dd{font-weight:650;margin-top:4px}
 .skill-grid,.project-grid{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
 .skill-grid article,.project,.empty{border:1px solid var(--color-border);border-radius:14px;background:var(--color-surface);overflow:hidden}
 .skill-grid article,.empty,.card-body{padding:24px}
-.skill-grid article>.mono{display:inline-block;margin-bottom:12px;color:var(--color-signal)}
+.ui-icon{display:block;flex:none}
+.button .ui-icon{width:18px;height:18px;margin-inline-end:8px}
+.skill-icon{display:grid;place-items:center;width:44px;height:44px;margin-bottom:14px;border:1px solid var(--color-border);border-radius:10px;background:var(--color-surface-muted);color:var(--color-primary)}
 .project:focus-within,.project:hover{border-color:var(--color-primary)}
 .tags{display:flex;flex-wrap:wrap;gap:7px;list-style:none;padding:0;margin:10px 0}
 .tags li,.status{background:var(--color-surface-muted);padding:3px 9px;border-radius:5px;font-size:.82rem;color:var(--color-text)}
@@ -116,4 +118,8 @@ footer a:focus-visible,.resume-band a:focus-visible{outline-color:#b8ceff}
 }
 @media(prefers-reduced-motion:no-preference){
  a,button{transition:color .18s,background-color .18s,border-color .18s}
+ .skill-grid article:hover .scan-line{animation:scan-sweep .7s ease-in-out}
+ .hero .button .ui-icon{transition:transform .18s ease-out}
+ .hero .button:hover .ui-icon,.hero .button:focus-visible .ui-icon{transform:translateY(-2px)}
 }
+@keyframes scan-sweep{50%{transform:translateY(5px)}}
