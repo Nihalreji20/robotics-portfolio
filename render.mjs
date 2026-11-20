@@ -26,8 +26,8 @@ function video(x){
  const u=new URL(href)
  const id=u.hostname==='youtu.be'?u.pathname.slice(1):['youtube.com','www.youtube.com','m.youtube.com'].includes(u.hostname)?u.searchParams.get('v'):''
  const player=/^[\w-]{11}$/.test(id || '')?
-   '<details data-video="'+id+'" data-title="'+e(x.title)+'" hidden><summary>Load video: '+e(x.title)+'</summary></details>':''
- return '<section><h2>'+e(x.title)+'</h2>'+paragraphs(x.summary)+player+link(href,'Watch on the video platform ↗')+'</section>'
+   '<iframe src="https://www.youtube-nocookie.com/embed/'+id+'" title="'+e(x.title)+'" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>':''
+ return '<section><h2>'+e(x.title)+'</h2>'+paragraphs(x.summary)+player+link(href,player?'Watch on YouTube ↗':'Watch on the video platform ↗')+'</section>'
 }
 function spans(block){
  return (block.children || []).map(span=>{

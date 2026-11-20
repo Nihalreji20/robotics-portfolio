@@ -55,7 +55,7 @@ Set `SANITY_PROJECT_ID` and `SANITY_DATASET` in your shell to try a CMS-backed b
    {"ref": "main"}
    ```
 
-GitHub Pages serves the generated files. The webhook calls GitHub’s API directly, and the workflow rebuilds all pages, including on unpublish and delete. The dispatch projection sends only the branch name. Video links support an optional click-to-load YouTube player for standard watch and short URLs, plus a summary and an external link. Other HTTPS video URLs are linked directly.
+GitHub Pages serves the generated files. The webhook calls GitHub’s API directly, and the workflow rebuilds all pages, including on unpublish and delete. The dispatch projection sends only the branch name. Standard YouTube watch and short URLs display an inline player and a fallback link. Other HTTPS video URLs are linked directly.
 
 Sanity currently lists two webhooks, 250,000 monthly API requests, and 100 GB each of asset storage and monthly bandwidth on Free. GitHub lists a 1 GB published Pages limit and a soft monthly bandwidth limit of 100 GB. Recheck the linked plan and usage limits when creating the accounts.
 

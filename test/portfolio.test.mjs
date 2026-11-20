@@ -45,8 +45,8 @@ test('technical blocks escape markup and provide video and table fallbacks',()=>
  assert.match(result,/<ul><li>Sensor<\/li><li>Controller<\/li><\/ul>/)
  assert.match(result,/<th scope="col">Value<\/th>/)
  assert.match(result,/<code>&lt;robot&gt;<\/code>/)
- assert.match(result,/data-video="abcdefghijk"/)
- assert.match(result,/Watch on the video platform/)
+ assert.ok(result.includes('<iframe src="https://www.youtube-nocookie.com/embed/abcdefghijk"'))
+ assert.match(result,/Watch on YouTube/)
 })
 test('root and repository-base builds generate local routes, assets, metadata and 404',async()=>{
  const folder=await mkdtemp(join(process.cwd(),'.test-build-'))
@@ -69,7 +69,7 @@ test('root and repository-base builds generate local routes, assets, metadata an
     assert.ok(projectIndex.includes('href="/portfolio/projects/'+slug+'/"'))
     const detail=await read('projects/'+slug+'/index.html')
     assert.ok(detail.includes('src="/portfolio/media/projects/'+slug+'.jpg"'))
-    assert.ok(detail.includes('data-video="'+videoId+'"'))
+    assert.ok(detail.includes('<iframe src="https://www.youtube-nocookie.com/embed/'+videoId+'"'))
     assert.match(detail,/blob\/main\/README\.md/)
     assert.ok((await readFile(join(folder,'dist','media','projects',slug+'.jpg'))).length>0)
    }
