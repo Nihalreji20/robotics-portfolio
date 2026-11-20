@@ -118,8 +118,11 @@ footer a:focus-visible,.resume-band a:focus-visible{outline-color:#b8ceff}
 }
 @media(prefers-reduced-motion:no-preference){
  a,button{transition:color .18s,background-color .18s,border-color .18s}
+ .hero>div,.hero>.portrait-frame{animation:hero-enter .36s ease-out both}
+ .hero>.portrait-frame{animation-delay:.1s}
  .skill-grid article:hover .scan-line{animation:scan-sweep .7s ease-in-out}
  .hero .button .ui-icon{transition:transform .18s ease-out}
  .hero .button:hover .ui-icon,.hero .button:focus-visible .ui-icon{transform:translateY(-2px)}
 }
+@keyframes hero-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 @keyframes scan-sweep{50%{transform:translateY(5px)}}
